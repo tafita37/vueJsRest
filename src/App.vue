@@ -1,47 +1,55 @@
+<template>
+  <HelloWorld @update-name="name => display(name)"/>
+  
+  <span>
+    
+  </span>
+
+  <!-- <div :class="[user.age>30? 'text-red' : 'text-green']">
+    {{ user.name }}
+  </div> -->
+
+  <!-- <div v-if="user.age>15">
+    Mon age : 
+  </div>
+
+  <div v-else>
+    Vous n'avez pas l'age requis
+  </div> -->
+
+  <!-- <input type="text" v-model="name" @input="display">
+  <input type="text" v-model="user.age" @input="display"> -->
+</template>
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import HelloWorld from './components/HelloWorld.vue';
+  import { computed, reactive, ref, watch } from 'vue';
+
+  const sentence = computed(() => {
+    return `Bonjour je m'appelle ${user.name} j'ai ${user.age}`;
+  })
+  const user = reactive({
+    name : "NordCoders",
+    age : 30
+  });
+
+  const name=ref("Nordcoders");
+
+  watch(name, (newValue, oldValue) => {
+    console.log(newValue, oldValue);
+  })
+
+  const display = (name) => {
+    console.log('App.vue : ', name);
+  }
+
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
-</template>
-
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  .text-red {
+    color: indianred;
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
+  .text-green {
+    color: green;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
